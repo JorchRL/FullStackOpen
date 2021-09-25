@@ -10,15 +10,7 @@ const App = () => {
         <div>
             <Header course={course} />
             <Content parts={parts} />
-            <Total
-                numExercises={parts
-                    .map((p) => {
-                        return p.excercises;
-                    })
-                    .reduce((a, v) => {
-                        return a + v;
-                    }, 0)}
-            />
+            <Total parts={parts} />
         </div>
     );
 };
@@ -60,9 +52,16 @@ const Part = (props) => {
     );
 };
 const Total = (props) => {
+    const numExercises = props.parts
+        .map((p) => {
+            return p.excercises;
+        })
+        .reduce((a, v) => {
+            return a + v;
+        }, 0);
     return (
         <>
-            <p>Number of excercises {props.numExercises}</p>
+            <p>Number of excercises {numExercises}</p>
         </>
     );
 };
