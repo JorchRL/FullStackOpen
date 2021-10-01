@@ -16,14 +16,14 @@ const Statistics = ({ reviews }) => {
         <>
             <h2>Statistics</h2>
             {hasReviews && (
-                <div>
+                <table>
                     <StatisticsLine text={"good"} value={good} />
                     <StatisticsLine text={"neutral"} value={neutral} />
                     <StatisticsLine text={"bad"} value={bad} />
                     <StatisticsLine text={"all"} value={all} />
                     <StatisticsLine text={"average"} value={average} hasPercent />
                     <StatisticsLine text={"positive"} value={positive} hasPercent />
-                </div>
+                </table>
             )}
             {!hasReviews && <p>No feedback given</p>}
         </>
@@ -32,11 +32,14 @@ const Statistics = ({ reviews }) => {
 
 const StatisticsLine = ({ text, value, hasPercent }) => {
     return (
-        <>
-            <p>
-                {text} {value} {hasPercent && "%"}
-            </p>
-        </>
+        <tbody>
+            <tr>
+                <td>{text}</td>
+                <td>
+                    {value} {hasPercent && "%"}
+                </td>
+            </tr>
+        </tbody>
     );
 };
 
