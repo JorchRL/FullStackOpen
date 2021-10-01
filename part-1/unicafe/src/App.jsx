@@ -11,15 +11,22 @@ const Statistics = ({ reviews }) => {
 
     const positive = all !== 0 ? (good / all) * 100 : 0;
 
+    const hasReviews = all > 0 ? true : false;
+
     return (
         <>
             <h2>Statistics</h2>
-            <p>good {good}</p>
-            <p>neutral {neutral}</p>
-            <p>bad {bad}</p>
-            <p>all {all}</p>
-            <p>average {average}</p>
-            <p>positive {positive}%</p>
+            {hasReviews && (
+                <div>
+                    <p>good {good}</p>
+                    <p>neutral {neutral}</p>
+                    <p>bad {bad}</p>
+                    <p>all {all}</p>
+                    <p>average {average}</p>
+                    <p>positive {positive}%</p>
+                </div>
+            )}
+            {!hasReviews && <p>No feedback given</p>}
         </>
     );
 };
