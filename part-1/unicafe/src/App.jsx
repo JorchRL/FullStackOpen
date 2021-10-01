@@ -8,7 +8,6 @@ const Statistics = ({ reviews }) => {
     const all = good + bad + neutral;
     const score = good - bad;
     const average = all !== 0 ? score / all : 0;
-
     const positive = all !== 0 ? (good / all) * 100 : 0;
 
     const hasReviews = all > 0 ? true : false;
@@ -18,15 +17,25 @@ const Statistics = ({ reviews }) => {
             <h2>Statistics</h2>
             {hasReviews && (
                 <div>
-                    <p>good {good}</p>
-                    <p>neutral {neutral}</p>
-                    <p>bad {bad}</p>
-                    <p>all {all}</p>
-                    <p>average {average}</p>
-                    <p>positive {positive}%</p>
+                    <StatisticsLine text={"good"} value={good} />
+                    <StatisticsLine text={"neutral"} value={neutral} />
+                    <StatisticsLine text={"bad"} value={bad} />
+                    <StatisticsLine text={"all"} value={all} />
+                    <StatisticsLine text={"average"} value={average} hasPercent />
+                    <StatisticsLine text={"positive"} value={positive} hasPercent />
                 </div>
             )}
             {!hasReviews && <p>No feedback given</p>}
+        </>
+    );
+};
+
+const StatisticsLine = ({ text, value, hasPercent }) => {
+    return (
+        <>
+            <p>
+                {text} {value} {hasPercent && "%"}
+            </p>
         </>
     );
 };
@@ -41,11 +50,19 @@ const App = () => {
     return (
         <>
             <h2>Give feedback</h2>
-            <button onClick={getHandler(good, setGood)}>good</button>
-            <button onClick={getHandler(neutral, setNeutral)}>neutral</button>
-            <button onClick={getHandler(bad, setBad)}>bad</button>
+            <Button clickHandler={getHandler(good, setGood)} text={"good"} />
+            <Button clickHandler={getHandler(neutral, setNeutral)} text={"neutral"} />
+            <Button clickHandler={getHandler(bad, setBad)} text={"bad"} />
             <br />
             <Statistics reviews={{ good: good, neutral: neutral, bad: bad }} />
+        </>
+    );
+};
+
+const Button = ({ clickHandler, text }) => {
+    return (
+        <>
+            <button onClick={clickHandler}>{text}</button>
         </>
     );
 };
