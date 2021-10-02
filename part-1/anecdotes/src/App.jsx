@@ -15,6 +15,7 @@ function App() {
     const [points, setPoints] = useState(anecdotes.map((v) => 0));
 
     const [selected, setSelected] = useState(0);
+    const [maxVotes, setMaxVotes] = useState(0);
 
     const shuffleSelectedQuote = () => {
         setSelected(Math.floor(Math.random() * anecdotes.length));
@@ -25,13 +26,31 @@ function App() {
         const pointsCopy = [...points];
         pointsCopy[anecdotesId] += 1;
         setPoints(pointsCopy);
+
+        // This seems like a very unelegant way of achieving what I want!
+        let maxVotes;
+        pointsCopy.map((v, i) => {
+            if (v === Math.max(...pointsCopy)) {
+                maxVotes = i;
+            }
+        });
+
+        // console.log(pointsCopy);
+        // console.log(Math.max(...pointsCopy));
+        // console.log(maxVotes);
+
+        setMaxVotes(maxVotes);
     };
 
     return (
         <div className='App'>
+            <h2>Anecdote of the day</h2>
+            <br />
+
             {anecdotes[selected]}
             <p>has {points[selected]} votes</p>
             <br />
+
             <button
                 onClick={() => {
                     voteForAnecdote(selected);
@@ -39,6 +58,10 @@ function App() {
                 Vote!
             </button>
             <button onClick={shuffleSelectedQuote}>Random anecdote</button>
+            <br />
+            <h2>Anecdote with most votes</h2>
+            {anecdotes[maxVotes]}
+            <p>has {points[maxVotes]} votes</p>
         </div>
     );
 }
