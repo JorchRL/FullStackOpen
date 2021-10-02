@@ -59,7 +59,7 @@ const Total = (props) => {
         }, 0);
     return (
         <>
-            <p>Number of excercises {numExercises}</p>
+            <h3>Total Number of excercises {numExercises}</h3>
         </>
     );
 };
