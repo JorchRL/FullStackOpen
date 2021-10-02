@@ -1,13 +1,18 @@
 const App = () => {
-    const course = {
+    const courseList = {
+        id: 1,
         name: "Half Stack application development",
         parts: [
-            { name: "Fundamentals of React", excercises: 10 },
-            { name: "using props to pass data", excercises: 7 },
-            { name: "state of a component", excercises: 14 },
+            { name: "Fundamentals of React", excercises: 10, id: 1 },
+            { name: "using props to pass data", excercises: 7, id: 2 },
+            { name: "state of a component", excercises: 14, id: 3 },
         ],
     };
 
+    return <Course course={courseList} />;
+};
+
+const Course = ({ course }) => {
     return (
         <div>
             <Header course={course.name} />
@@ -25,21 +30,12 @@ const Header = (props) => {
     );
 };
 
-const Content = (props) => {
+const Content = ({ parts }) => {
     return (
         <>
-            <Part
-                part={props.parts[0].name}
-                excercises={props.parts[0].excercises}
-            />
-            <Part
-                part={props.parts[1].name}
-                excercises={props.parts[1].excercises}
-            />
-            <Part
-                part={props.parts[2].name}
-                excercises={props.parts[2].excercises}
-            />
+            {parts.map((part) => (
+                <Part key={part.id} part={part.name} excercises={part.excercises} />
+            ))}
         </>
     );
 };
