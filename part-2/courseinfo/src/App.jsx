@@ -15,17 +15,17 @@ const App = () => {
 const Course = ({ course }) => {
     return (
         <div>
-            <Header course={course.name} />
+            <Header courseName={course.name} />
             <Content parts={course.parts} />
             <Total parts={course.parts} />
         </div>
     );
 };
 
-const Header = (props) => {
+const Header = ({ courseName }) => {
     return (
         <>
-            <h1>{props.course}</h1>
+            <h1>{courseName}</h1>
         </>
     );
 };
@@ -34,23 +34,23 @@ const Content = ({ parts }) => {
     return (
         <>
             {parts.map((part) => (
-                <Part key={part.id} part={part.name} excercises={part.excercises} />
+                <Part key={part.id} partName={part.name} excercises={part.excercises} />
             ))}
         </>
     );
 };
 
-const Part = (props) => {
+const Part = ({ partName, excercises }) => {
     return (
         <>
             <p>
-                {props.part} {props.excercises}
+                {partName} {excercises}
             </p>
         </>
     );
 };
-const Total = (props) => {
-    const numExercises = props.parts
+const Total = ({ parts }) => {
+    const numExercises = parts
         .map((p) => {
             return p.excercises;
         })
