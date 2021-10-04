@@ -3,15 +3,22 @@ import Debug from "./Debug";
 
 const PhoneBookForm = ({ addNameHandler }) => {
     const [newName, setNewName] = useState("");
+    const [newNumber, setNewNumber] = useState("");
 
     const handleInputChange = (event) => {
-        setNewName(event.target.value);
+        console.log(event.target);
+        event.target.id === "name-input" && setNewName(event.target.value);
+        event.target.id === "number-input" && setNewNumber(event.target.value);
     };
 
     const debugVars = [
         {
             name: "newName",
             val: newName,
+        },
+        {
+            name: "newNumber",
+            val: newNumber,
         },
     ];
 
@@ -20,7 +27,9 @@ const PhoneBookForm = ({ addNameHandler }) => {
             <Debug vars={debugVars} />
             <form onSubmit={addNameHandler}>
                 <div>
-                    name: <input onChange={handleInputChange} type='text' placeholder='Add a new name...' />
+                    name: <input id='name-input' onChange={handleInputChange} type='text' placeholder='Add a new name...' />
+                    <br />
+                    number: <input id='number-input' onChange={handleInputChange} type='text' placeholder='Add a new number...' />
                 </div>
                 <div>
                     <button type='submit'>add</button>
