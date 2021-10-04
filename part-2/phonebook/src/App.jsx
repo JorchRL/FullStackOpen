@@ -38,7 +38,13 @@ const App = () => {
             id: persons.length + 1,
         };
 
-        setPersons(persons.concat(addedName));
+        // console.log(event.target[0].value);
+        const hasName = persons.find(({ name }) => name === event.target[0].value) !== undefined ? true : false;
+        // console.log(persons.find(({ name }) => name === event.target[0].value));
+        // console.log(`hasName`, hasName);
+
+        // console.log(hasName);
+        !hasName ? setPersons(persons.concat(addedName)) : alert(`${event.target[0].value} is already on the phonebook!`);
         event.target[0].value = "";
     };
 
