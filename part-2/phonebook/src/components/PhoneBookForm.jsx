@@ -6,7 +6,7 @@ const PhoneBookForm = ({ addNameHandler }) => {
     const [newNumber, setNewNumber] = useState("");
 
     const handleInputChange = (event) => {
-        console.log(event.target);
+        // console.log(event.target);
         event.target.id === "name-input" && setNewName(event.target.value);
         event.target.id === "number-input" && setNewNumber(event.target.value);
     };

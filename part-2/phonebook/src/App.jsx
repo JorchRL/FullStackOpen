@@ -33,19 +33,29 @@ const App = () => {
 
     const handleAddName = (event) => {
         event.preventDefault();
+
+        // Check inputs for this handler
+        // console.log([...event.target].map((t) => t.id));
+
         const addedName = {
             name: event.target[0].value,
+            number: event.target[1].value,
             id: persons.length + 1,
         };
 
         // console.log(event.target[0].value);
         const hasName = persons.find(({ name }) => name === event.target[0].value) !== undefined ? true : false;
+        const includesNumber = addedName.number !== "" ? true : false;
+        const includesName = addedName.name !== "" ? true : false;
         // console.log(persons.find(({ name }) => name === event.target[0].value));
         // console.log(`hasName`, hasName);
 
         // console.log(hasName);
-        !hasName ? setPersons(persons.concat(addedName)) : alert(`${event.target[0].value} is already on the phonebook!`);
+        hasName ? alert(`${event.target[0].value} is already on the phonebook!`) : !includesNumber ? alert(`Please include ${event.target[0].value}'s phone number!'`) : !includesName ? alert(`Please specify the name!`) : setPersons(persons.concat(addedName));
+
         event.target[0].value = "";
+        event.target[1].value = "";
+        console.log(persons);
     };
 
     return (

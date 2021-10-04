@@ -7,7 +7,12 @@ const NumberList = ({ personList }) => {
             <h2>Numbers</h2>
             <ul>
                 {personList.map((person) => {
-                    return <li key={person.id}>{person.name}</li>;
+                    return (
+                        <li key={person.id}>
+                            {console.log(person.number)}
+                            {person.name} - {person.number !== undefined ? person.number : <em>"Missing number!"</em>}
+                        </li>
+                    );
                 })}
             </ul>
         </div>
