@@ -24,7 +24,8 @@ const PhoneBookForm = ({ addNameHandler }) => {
 
     return (
         <div>
-            <Debug vars={debugVars} />
+            {/* <Debug vars={debugVars} /> */}
+            <h2>Add new</h2>
             <form onSubmit={addNameHandler}>
                 <div>
                     name: <input id='name-input' onChange={handleInputChange} type='text' placeholder='Add a new name...' />

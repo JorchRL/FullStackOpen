@@ -9,7 +9,7 @@ const NumberList = ({ personList }) => {
                 {personList.map((person) => {
                     return (
                         <li key={person.id}>
-                            {console.log(person.number)}
+                            {/* {console.log(person.number)} */}
                             {person.name} - {person.number !== undefined ? person.number : <em>"Missing number!"</em>}
                         </li>
                     );
