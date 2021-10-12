@@ -1,37 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 // import Debug from "./components/Debug";
 import NumberList from "./components/NumberList";
 import PhoneBookForm from "./components/PhoneBookForm";
 
 const App = () => {
-    const [persons, setPersons] = useState([
-        {
-            name: "Pelos elGato",
-            id: 1,
-        },
-        {
-            name: "Vaca Panquesina",
-            id: 2,
-        },
-        {
-            name: "Pirri Otota",
-            id: 3,
-        },
-        {
-            name: "Pinky Winky",
-            id: 4,
-        },
-        {
-            name: "Rusty Totoshka",
-            id: 5,
-        },
-        {
-            name: "Patiti Pulgosa",
-            id: 6,
-        },
-    ]);
-
+    const [persons, setPersons] = useState([]);
     const [personDisplay, setPersonDisplay] = useState(persons);
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/persons").then((resp) => {
+            setPersons(resp.data);
+            setPersonDisplay(resp.data);
+            // console.log(resp.data);
+        });
+    }, []);
+
+    // console.log(persons);
 
     const handleAddName = (event) => {
         event.preventDefault();
