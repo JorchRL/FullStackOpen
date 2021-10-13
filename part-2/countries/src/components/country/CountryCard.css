@@ -1,0 +1,37 @@
+.container {
+    width: 300px;
+    height: 70px;
+    /* border: 1px solid #4d4d4d; */
+    border-radius: 10px;
+    /* background-color: red; */
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container:hover {
+    background-color: silver;
+}
+
+#flag {
+    border: 1px solid rgb(124, 124, 124);
+    border-radius: 3px;
+    margin-right: 20px;
+    max-width: 40%;
+    max-height: 60%;
+    object-fit: contain;
+}
+
+#name {
+    /* border: 1px solid red; */
+    margin-left: 20px;
+    max-width: 40%;
+    font-weight: 700;
+    max-height: 70%;
+}
+
+#norm {
+    font-weight: 600;
+    font-size: 10px;
+}
