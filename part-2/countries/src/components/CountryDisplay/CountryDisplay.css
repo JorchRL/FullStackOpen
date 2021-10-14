@@ -41,6 +41,8 @@
 }
 
 .weather img {
+    margin-top: 10px;
+    margin-bottom: 5px;
     align-self: center;
     width: 25%;
 }
@@ -54,6 +56,7 @@
 
 #Dflag img {
     width: 80%;
+    border: 1px solid #838383;
 }
 
 #Dname {
