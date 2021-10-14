@@ -5,11 +5,12 @@ import "./CountryDisplay.css";
 const CountryDisplay = ({ name, flag, capital, population, languages }) => {
     // const [capitalWeather, setCapitalWeather] = useState(0);
 
-    // const weatherURL = `http://api.weatherstack.com/current?access_key=${process.en}`;
+    // const weatherURL = `http://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=New York`;
 
     // useEffect(() => {
     //     axios.get(weatherURL).then((resp) => {
-    //         setCapitalWeather(resp.data);
+    //         // setCapitalWeather(resp.data);
+    //         console.log(resp.data);
     //     });
     // }, []);
 
