@@ -29,7 +29,12 @@ const App = () => {
                     return true;
                 }
                 // console.log(event.target.value);
-                const regex = RegExp(`^${event.target.value}`, "i");
+                let regex = RegExp("");
+                try {
+                    regex = RegExp(`^${event.target.value}`, "i");
+                } catch {
+                    regex = RegExp("aaaaaaaaaaa");
+                }
                 return regex.test(latinize(country.name));
             })
         );
