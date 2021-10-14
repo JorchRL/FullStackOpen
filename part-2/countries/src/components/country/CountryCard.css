@@ -12,6 +12,7 @@
 
 .container:hover {
     background-color: silver;
+    cursor: pointer;
 }
 
 #flag {

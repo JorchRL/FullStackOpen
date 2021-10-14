@@ -28,11 +28,20 @@ const App = () => {
                 if (event.target.value === "") {
                     return true;
                 }
-
+                // console.log(event.target.value);
                 const regex = RegExp(`^${event.target.value}`, "i");
                 return regex.test(latinize(country.name));
             })
         );
+    };
+
+    const handleClickContryCard = (i) => {
+        // This handler sets the country display array to the single country whose card was clicked
+        // 1 get the coutry object
+        // use setCountriesDisplay() to have a single display country
+        // use setSearchQuery() to set the query to the country's name (???)
+        // console.log(`Clicked country`, countriesDisplay[i].name);
+        handleSearch({ target: { value: countriesDisplay[i].name } });
     };
 
     return (
@@ -44,9 +53,9 @@ const App = () => {
 
             {countriesDisplay.length <= 25 && countriesDisplay.length > 1 ? (
                 <ul>
-                    {countriesDisplay.map((country) => {
+                    {countriesDisplay.map((country, index) => {
                         const flag = country.flags.svg !== undefined ? country.flags.svg : country.flags.png;
-                        return <CountryCard key={country.name} name={country.name} flag={flag} />;
+                        return <CountryCard key={country.name} name={country.name} flag={flag} index={index} clickHandler={handleClickContryCard} />;
                     })}
                     {/* {countries[144] && <Country name={countries[144].name} flag={countries[144].flags.svg} />} */}
                 </ul>
