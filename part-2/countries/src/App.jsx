@@ -68,7 +68,29 @@ const App = () => {
     );
 };
 
+const CountryDisplayDEBUG = () => {
+    const [country, setCountry] = useState([]);
+
+    useEffect(() => {
+        console.log("Requesting country data");
+        axios.get("https://restcountries.com/v2/name/mexico").then((resp) => {
+            console.log(resp.data[0]);
+            setCountry(resp.data[0]);
+        });
+    }, []);
+
+    // console.log(country.languages);
+
+    return (
+        <div className='App'>
+            <CountryDisplay name={country.name} population={country.population} languages={country.languages} capital={country.capital} flag={country.flags.svg} />;
+        </div>
+    );
+    // return <h1>Hola</h1>;
+};
+
 export default App;
+export { CountryDisplayDEBUG };
 
 const DebugVars = ({ vars }) => {
     const { query, results } = vars;

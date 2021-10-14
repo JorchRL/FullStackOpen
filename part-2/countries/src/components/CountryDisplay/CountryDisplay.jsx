@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./CountryDisplay.css";
 
 const CountryDisplay = ({ name, flag, capital, population, languages }) => {
-    // console.log(languages);
+    // const [capitalWeather, setCapitalWeather] = useState(0);
+
+    // const weatherURL = `http://api.weatherstack.com/current?access_key=${process.en}`;
+
+    // useEffect(() => {
+    //     axios.get(weatherURL).then((resp) => {
+    //         setCapitalWeather(resp.data);
+    //     });
+    // }, []);
+
     return (
         <div className='Dcontainer'>
             <h3 id='Dname'>{name}</h3>
@@ -15,7 +25,7 @@ const CountryDisplay = ({ name, flag, capital, population, languages }) => {
                     return <li key={lang.name}>{lang.name}</li>;
                 })}
             </ul>
-            <img src={flag} id='Dflag' />
+            <img src={flag} alt={`Flag of ${name}`} id='Dflag' />
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App, { CountryDisplayDEBUG } from "./App";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<CountryDisplayDEBUG />, document.getElementById("root"));
