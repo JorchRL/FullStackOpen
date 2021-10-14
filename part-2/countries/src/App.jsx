@@ -72,9 +72,9 @@ const CountryDisplayDEBUG = () => {
     const [country, setCountry] = useState([]);
 
     useEffect(() => {
-        console.log("Requesting country data");
+        // console.log("Requesting country data");
         axios.get("https://restcountries.com/v2/name/mexico").then((resp) => {
-            console.log(resp.data[0]);
+            // console.log(resp.data[0]);
             setCountry(resp.data[0]);
         });
     }, []);
