@@ -62,7 +62,6 @@ const App = () => {
                         const flag = country.flags.svg !== undefined ? country.flags.svg : country.flags.png;
                         return <CountryCard key={country.name} name={country.name} flag={flag} index={index} clickHandler={handleClickContryCard} />;
                     })}
-                    {/* {countries[144] && <Country name={countries[144].name} flag={countries[144].flags.svg} />} */}
                 </ul>
             ) : (
                 countriesDisplay.length > 25 && searchQuery !== "" && <h4>Too many results ({countriesDisplay.length}). Please narrow down your search</h4>
@@ -73,27 +72,27 @@ const App = () => {
     );
 };
 
-const CountryDisplayDEBUG = () => {
-    const [country, setCountry] = useState([]);
+// const CountryDisplayDEBUG = () => {
+//     const [country, setCountry] = useState([]);
 
-    useEffect(() => {
-        // console.log("Requesting country data");
-        axios.get("https://restcountries.com/v2/name/mexico").then((resp) => {
-            // console.log(resp.data[0]);
-            setCountry(resp.data[0]);
-        });
-    }, []);
+//     useEffect(() => {
+//         // console.log("Requesting country data");
+//         axios.get("https://restcountries.com/v2/name/mexico").then((resp) => {
+//             // console.log(resp.data[0]);
+//             setCountry(resp.data[0]);
+//         });
+//     }, []);
 
-    // console.log(country.flags);
+//     // console.log(country.flags);
 
-    // useEffect ALWAYS happens after the first rendering, but we need the request data here. So, we add a simple
-    // check in order to actually use the data on the second render, after useEffect() is done...
-    return <div className='App'>{country.length !== 0 && <CountryDisplay name={country.name} population={country.population} languages={country.languages} capital={country.capital} flag={country.flags.svg} />}</div>;
-    // return <h1>Hola</h1>;
-};
+//     // useEffect ALWAYS happens after the first rendering, but we need the request data here. So, we add a simple
+//     // check in order to actually use the data on the second render, after useEffect() is done...
+//     return <div className='App'>{country.length !== 0 && <CountryDisplay name={country.name} population={country.population} languages={country.languages} capital={country.capital} flag={country.flags.svg} />}</div>;
+//     // return <h1>Hola</h1>;
+// };
 
 export default App;
-export { CountryDisplayDEBUG };
+// export { CountryDisplayDEBUG };
 
 const DebugVars = ({ vars }) => {
     const { query, results } = vars;

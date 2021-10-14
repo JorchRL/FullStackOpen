@@ -10,13 +10,13 @@ const CountryDisplay = ({ name, flag, capital, population, languages }) => {
     const weatherURL = `http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_WEATHER_API_KEY}&query=${name}`;
 
     useEffect(() => {
-        console.log(weatherURL);
+        // console.log(weatherURL);
         axios({
             method: "GET",
             url: weatherURL,
         }).then((resp) => {
             setCapitalWeather(resp.data.current);
-            console.log(resp.data.current);
+            // console.log(resp.data.current);
         });
     }, []);
 
