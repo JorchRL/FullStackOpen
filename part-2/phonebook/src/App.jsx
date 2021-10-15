@@ -8,6 +8,7 @@ import phoneBookService from "./services/phonebook";
 const App = () => {
     const [persons, setPersons] = useState([]);
     const [personDisplay, setPersonDisplay] = useState(persons);
+    const [notification, setNotification] = useState("");
 
     useEffect(() => {
         // axios.get("http://localhost:3001/persons")
@@ -38,14 +39,19 @@ const App = () => {
                     return p.name === addedName.name;
                 })[0].id;
 
-                setPersons(persons.filter((p) => p.id !== updateId));
-
-                setPersonDisplay(personDisplay.filter((p) => p.id !== updateId));
-
-                phoneBookService.updateNumber(addedName, updateId).then((updatedPerson) => {
-                    setPersons(persons.filter((p) => p.id !== updateId).concat(updatedPerson));
-                    setPersonDisplay(personDisplay.filter((p) => p.id !== updateId).concat(updatedPerson));
-                });
+                phoneBookService
+                    .updateNumber(addedName, updateId)
+                    .then((updatedPerson) => {
+                        setPersons(persons.filter((p) => p.id !== updateId).concat(updatedPerson));
+                        setPersonDisplay(personDisplay.filter((p) => p.id !== updateId).concat(updatedPerson));
+                        return updatedPerson.name;
+                    })
+                    .then((name) => {
+                        setNotification(`Modified ${name}'s entry on the phonebook!`);
+                        setTimeout(() => {
+                            setNotification("");
+                        }, 3000);
+                    });
             }
         } else if (!includesNumber || !includesName) {
             if (!includesNumber) {
@@ -54,10 +60,19 @@ const App = () => {
                 alert(`Please enter a name`);
             }
         } else {
-            phoneBookService.addNumber(addedName).then((returnedName) => {
-                setPersons(persons.concat(returnedName));
-                setPersonDisplay(personDisplay.concat(returnedName));
-            });
+            phoneBookService
+                .addNumber(addedName)
+                .then((returnedName) => {
+                    setPersons(persons.concat(returnedName));
+                    setPersonDisplay(personDisplay.concat(returnedName));
+                    return returnedName.name;
+                })
+                .then((name) => {
+                    setNotification(`Added ${name} to the phonebook!`);
+                    setTimeout(() => {
+                        setNotification("");
+                    }, 3000);
+                });
         }
 
         event.target[0].value = "";
@@ -67,13 +82,37 @@ const App = () => {
 
     const handleDeleteNumber = (id) => {
         if (window.confirm(`Delete ${persons.find((p) => p.id === id).name}?`)) {
-            phoneBookService.deleteNumber(id).then((response) => {
-                const newPersonsList = persons.filter((p) => {
-                    return p.id !== id;
+            phoneBookService
+                .deleteNumber(id)
+                .then((response) => {
+                    const newPersonsList = persons.filter((p) => {
+                        return p.id !== id;
+                    });
+                    setPersons(newPersonsList);
+                    setPersonDisplay(newPersonsList);
+                })
+                .then(() => {
+                    setNotification("Deletion complete!");
+                    setTimeout(() => {
+                        setNotification("");
+                    }, 3000);
+                })
+                .catch((error) => {
+                    console.log("ERROR DELETING NUMBER: The number has already been deleted from the server");
+                    setNotification(`${persons.find((p) => p.id === id).name} has already been deleted from the server!`);
+                    setTimeout(() => {
+                        setNotification("");
+                    }, 3000);
+
+                    setPersons(persons.filter((p) => p.id !== id));
+                    setPersonDisplay(persons.filter((p) => p.id !== id));
+
+                    /**
+                     * Handle error when deleting a number that no longer exists in the backend
+                     * 1 display error message
+                     * 2 update display
+                     */
                 });
-                setPersons(newPersonsList);
-                setPersonDisplay(newPersonsList);
-            });
         }
     };
 
@@ -89,6 +128,7 @@ const App = () => {
     return (
         <>
             <h2>Phonebook</h2>
+            <Notification message={notification} />
             <FilterPersons personList={persons} handler={handleFilterPersons} />
             <PhoneBookForm addNameHandler={handleAddName} />
             <NumberList personList={personDisplay} deleteHandler={handleDeleteNumber} />
@@ -97,15 +137,6 @@ const App = () => {
 };
 
 export default App;
-
-/**
- * Problem with the filtering solution:
- * If we mutate the persons state (via setPersons) in the App component when filtering, we are
- * loosing information. Thus, we should actually use two state objects for persons: one for adding names,
- * and one for displaying and filtering. This means that we will have to refactor the props
- * givent to the NumberList component so that it displays the "filtering" list when there are filter queries
- * and the "database" list when there is no query, so it displays every name in such case.
- */
 
 const FilterPersons = ({ personList, handler }) => {
     const handleFilter = (event) => {
@@ -131,6 +162,18 @@ const FilterPersons = ({ personList, handler }) => {
             <form onSubmit={(event) => event.preventDefault()}>
                 filter shown with: <input onChange={handleFilter}></input>
             </form>
+        </div>
+    );
+};
+
+const Notification = ({ message }) => {
+    if (message === "") {
+        return null;
+    }
+
+    return (
+        <div className='notification'>
+            <h3>{message}</h3>
         </div>
     );
 };
