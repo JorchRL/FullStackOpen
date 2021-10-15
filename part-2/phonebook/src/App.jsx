@@ -24,7 +24,7 @@ const App = () => {
         const addedName = {
             name: event.target[0].value,
             number: event.target[1].value,
-            id: persons.length + 1,
+            // id: persons.length + 1,
         };
 
         // Validate our input
@@ -32,7 +32,21 @@ const App = () => {
         const includesNumber = addedName.number !== "" ? true : false;
         const includesName = addedName.name !== "" ? true : false;
         if (hasName) {
-            alert(`${event.target[0].value} is already on the phonebook!`);
+            // Here we want to check wheter the user wishes to update the existing name
+            if (window.confirm(`${event.target[0].value} is already on the phonebook. Do you want to update their number?`)) {
+                const updateId = persons.filter((p) => {
+                    return p.name === addedName.name;
+                })[0].id;
+
+                setPersons(persons.filter((p) => p.id !== updateId));
+
+                setPersonDisplay(personDisplay.filter((p) => p.id !== updateId));
+
+                phoneBookService.updateNumber(addedName, updateId).then((updatedPerson) => {
+                    setPersons(persons.filter((p) => p.id !== updateId).concat(updatedPerson));
+                    setPersonDisplay(personDisplay.filter((p) => p.id !== updateId).concat(updatedPerson));
+                });
+            }
         } else if (!includesNumber || !includesName) {
             if (!includesNumber) {
                 alert(`Please include ${addedName.name}'s number'`);
@@ -42,7 +56,7 @@ const App = () => {
         } else {
             phoneBookService.addNumber(addedName).then((returnedName) => {
                 setPersons(persons.concat(returnedName));
-                setPersonDisplay(persons.concat(returnedName));
+                setPersonDisplay(personDisplay.concat(returnedName));
             });
         }
 
@@ -102,7 +116,7 @@ const FilterPersons = ({ personList, handler }) => {
             if (event.target.value === "") {
                 return true;
             }
-            const regex = RegExp(`^${event.target.value}`, "i");
+            const regex = RegExp(`${event.target.value}`, "i");
             // console.log(regex);
             return regex.test(person.name);
         });
