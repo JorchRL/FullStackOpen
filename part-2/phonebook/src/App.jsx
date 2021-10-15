@@ -3,15 +3,17 @@ import axios from "axios";
 // import Debug from "./components/Debug";
 import NumberList from "./components/NumberList";
 import PhoneBookForm from "./components/PhoneBookForm";
+import phoneBookService from "./services/phonebook";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
     const [personDisplay, setPersonDisplay] = useState(persons);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/persons").then((resp) => {
-            setPersons(resp.data);
-            setPersonDisplay(resp.data);
+        // axios.get("http://localhost:3001/persons")
+        phoneBookService.getAllNumbers().then((numbers) => {
+            setPersons(numbers);
+            setPersonDisplay(numbers);
             // console.log(resp.data);
         });
     }, []);
@@ -21,22 +23,16 @@ const App = () => {
     const handleAddName = (event) => {
         event.preventDefault();
 
-        // Check inputs for this handler
-        // console.log([...event.target].map((t) => t.id));
-
         const addedName = {
             name: event.target[0].value,
             number: event.target[1].value,
-            id: persons.length + 1,
+            // id: persons.length + 1,
         };
 
-        // console.log(event.target[0].value);
+        // Validate our input
         const hasName = persons.find(({ name }) => name === event.target[0].value) !== undefined ? true : false;
         const includesNumber = addedName.number !== "" ? true : false;
         const includesName = addedName.name !== "" ? true : false;
-        // console.log(persons.find(({ name }) => name === event.target[0].value));
-        // console.log(`hasName`, hasName);
-
         if (hasName) {
             alert(`${event.target[0].value} is already on the phonebook!`);
         } else if (!includesNumber || !includesName) {
@@ -46,8 +42,10 @@ const App = () => {
                 alert(`Please enter a name`);
             }
         } else {
-            setPersons(persons.concat(addedName));
-            setPersonDisplay(persons.concat(addedName));
+            phoneBookService.addNumber(addedName).then((returnedName) => {
+                setPersons(persons.concat(returnedName));
+                setPersonDisplay(persons.concat(returnedName));
+            });
         }
 
         event.target[0].value = "";
