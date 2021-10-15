@@ -26,7 +26,7 @@ const App = () => {
         const addedName = {
             name: event.target[0].value,
             number: event.target[1].value,
-            // id: persons.length + 1,
+            id: persons.length + 1,
         };
 
         // Validate our input
