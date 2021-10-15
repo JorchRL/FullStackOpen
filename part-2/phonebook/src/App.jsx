@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 // import Debug from "./components/Debug";
 import NumberList from "./components/NumberList";
 import PhoneBookForm from "./components/PhoneBookForm";
@@ -17,8 +17,6 @@ const App = () => {
             // console.log(resp.data);
         });
     }, []);
-
-    // console.log(persons);
 
     const handleAddName = (event) => {
         event.preventDefault();
@@ -50,7 +48,19 @@ const App = () => {
 
         event.target[0].value = "";
         event.target[1].value = "";
-        console.log(persons);
+        // console.log(persons);
+    };
+
+    const handleDeleteNumber = (id) => {
+        if (window.confirm(`Delete ${persons.find((p) => p.id === id).name}?`)) {
+            phoneBookService.deleteNumber(id).then((response) => {
+                const newPersonsList = persons.filter((p) => {
+                    return p.id !== id;
+                });
+                setPersons(newPersonsList);
+                setPersonDisplay(newPersonsList);
+            });
+        }
     };
 
     const handleFilterPersons = (filteredPersons) => {
@@ -67,7 +77,7 @@ const App = () => {
             <h2>Phonebook</h2>
             <FilterPersons personList={persons} handler={handleFilterPersons} />
             <PhoneBookForm addNameHandler={handleAddName} />
-            <NumberList personList={personDisplay} />
+            <NumberList personList={personDisplay} deleteHandler={handleDeleteNumber} />
         </>
     );
 };

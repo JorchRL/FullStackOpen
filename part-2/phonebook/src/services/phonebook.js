@@ -12,4 +12,9 @@ const addNumber = (newObject) => {
     return request.then((resp) => resp.data);
 };
 
-export default { getAllNumbers, addNumber };
+const deleteNumber = (deletedId) => {
+    const request = axios.delete(`${baseUrl}/${deletedId}`);
+    return request.then((r) => r);
+};
+
+export default { getAllNumbers, addNumber, deleteNumber };

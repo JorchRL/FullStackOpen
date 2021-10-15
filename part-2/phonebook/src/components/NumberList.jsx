@@ -1,6 +1,6 @@
 import React from "react";
 
-const NumberList = ({ personList }) => {
+const NumberList = ({ personList, deleteHandler }) => {
     // console.log(personList);
     return (
         <div className='NumberList'>
@@ -9,8 +9,10 @@ const NumberList = ({ personList }) => {
                 {personList.map((person) => {
                     return (
                         <li key={person.id}>
-                            {/* {console.log(person.number)} */}
                             {person.name} - {person.number !== undefined ? person.number : <em>"Missing number!"</em>}
+                            <button style={{ marginLeft: "10px" }} onClick={() => deleteHandler(person.id)}>
+                                Delete
+                            </button>
                         </li>
                     );
                 })}
