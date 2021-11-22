@@ -11,6 +11,7 @@ const App = () => {
       type: "GOOD",
     });
   };
+
   return (
     <div>
       <button onClick={goodHandler}>good</button>

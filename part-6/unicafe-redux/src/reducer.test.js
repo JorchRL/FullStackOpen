@@ -13,15 +13,15 @@ describe("unicafe reducer", () => {
     const action = {
       type: "DO_NOTHING",
     };
-    const newState = counterReducer(undefined, action); // undefined?
+    deepFreeze(state);
+    const newState = counterReducer(undefined, action); // undefined in order to have redux initialize the state
     expect(newState).toEqual(initialState);
   });
 
-  test("good is incremented", () => {
+  test("good is incremented with action GOOD", () => {
     const action = {
       type: "GOOD",
     };
-
     const state = initialState;
 
     deepFreeze(state);
@@ -31,5 +31,41 @@ describe("unicafe reducer", () => {
       ok: 0,
       bad: 0,
     });
+  });
+
+  test("ok is incremented with action OK", () => {
+    const action = { type: "OK" };
+    const state = initialState;
+    deepFreeze(state);
+    const newState = counterReducer(state, action);
+    expect(newState).toEqual({
+      good: 0,
+      ok: 1,
+      bad: 0,
+    });
+  });
+
+  test("bad is incremented with action BAD", () => {
+    const action = { type: "BAD" };
+    const state = initialState;
+    deepFreeze(state);
+    const newState = counterReducer(state, action);
+    expect(newState).toEqual({
+      good: 0,
+      ok: 0,
+      bad: 1,
+    });
+  });
+
+  test("resets state to initialState with action ZERO", () => {
+    const action = { type: "ZERO" };
+    const state = {
+      good: 3,
+      ok: 2,
+      bad: 2,
+    };
+    deepFreeze(state);
+    const newState = counterReducer(state, action);
+    expect(newState).toEqual(initialState);
   });
 });
