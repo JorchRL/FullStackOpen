@@ -1,11 +1,13 @@
 import React from "react";
+import { NewNote, Notes } from "./Notes";
 
 const App = () => {
-    return (
-        <div className='App'>
-            <h1>Hello, world!</h1>
-        </div>
-    );
+  return (
+    <div>
+      <NewNote />
+      <Notes />
+    </div>
+  );
 };
 
 export default App;
