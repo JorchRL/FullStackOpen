@@ -30,12 +30,26 @@ const reducer = (state = initialState, action) => {
         ...selectedAnecdote,
         votes: selectedAnecdote.votes + 1,
       };
-      return state.map((an) => (an.id === action.data.id ? newAnecdote : an));
+      return sortByVotes(
+        state.map((an) => (an.id === action.data.id ? newAnecdote : an))
+      );
     case "NEW_ANECDOTE":
       return state.concat(asObject(action.data.content));
     default:
       return state;
   }
+};
+
+const sortByVotes = (list) => {
+  return list.sort((a, b) => {
+    if (a.votes < b.votes) {
+      return 1;
+    } else if (a.votes > b.votes) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
 };
 
 export default reducer;
